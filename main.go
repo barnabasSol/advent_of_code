@@ -1,32 +1,27 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
-	"strconv"
-	"strings"
 )
 
 func main() {
-	file, err := os.Open("./input.txt")
+	file, err := os.Open("./input2.txt")
 	if err != nil {
 		fmt.Println("Error opening file:", err)
 		return
 	}
 	defer file.Close()
-
-	var g1, g2 []int
-	scanner := bufio.NewScanner(file)
-
-	for scanner.Scan() {
-		numbers := strings.Fields(scanner.Text())
-		if len(numbers) == 2 {
-			num1, _ := strconv.Atoi(numbers[0])
-			num2, _ := strconv.Atoi(numbers[1])
-			g1 = append(g1, num1)
-			g2 = append(g2, num2)
-		}
+	rows := [][]int{
+		// {7, 6, 4, 2, 1},
+		// {1, 2, 7, 8, 9},
+		// {9, 7, 6, 2, 1},
+		// {1, 3, 2, 4, 5},
+		// {8, 6, 4, 4, 1},
+		// {1, 3, 6, 7, 9},
 	}
-	println(similarity_score(g1, g2))
+	input := getInput(file, rows)
+
+	count := safe_count(input)
+	println(count)
 }

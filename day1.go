@@ -6,7 +6,6 @@ func distance_sum(g1, g2 []int) int {
 	distances := make([]int, len(g1))
 	slices.Sort(g1)
 	slices.Sort(g2)
-	distances[0] = g1[0] - g2[0]
 	for i := 0; i < len(g1); i++ {
 		distances[i] = g1[i] - g2[i]
 		if distances[i] < 0 {
