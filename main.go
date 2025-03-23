@@ -1,27 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"os"
+	"log"
+
+	twentyfour "github.com/barnabasSol/advent/2024"
 )
 
 func main() {
-	file, err := os.Open("./input2.txt")
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return
+	reports := [][]int{
+		{7, 6, 4, 2, 1},
+		{1, 2, 7, 8, 9},
+		{9, 7, 6, 2, 1},
+		{1, 3, 2, 4, 5},
+		{8, 6, 4, 4, 1},
+		{1, 3, 6, 7, 9},
 	}
-	defer file.Close()
-	rows := [][]int{
-		// {7, 6, 4, 2, 1},
-		// {1, 2, 7, 8, 9},
-		// {9, 7, 6, 2, 1},
-		// {1, 3, 2, 4, 5},
-		// {8, 6, 4, 4, 1},
-		// {1, 3, 6, 7, 9},
-	}
-	input := getInput(file, rows)
+	log.Println(twentyfour.IsSafe(reports))
 
-	count := safe_count(input)
-	println(count)
 }

@@ -1,3 +1,3 @@
-module github.com/barnabasSol/advent_of_code
+module github.com/barnabasSol/advent
 
-go 1.23.2
+go 1.24.0
