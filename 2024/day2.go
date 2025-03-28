@@ -8,126 +8,66 @@ import (
 	"strings"
 )
 
-func damp(reports []int, i, z int) bool {
-	out := make([]int, len(reports))
-	copy(out, reports)
-	out = slices.Delete(out, i, z)
-	is_increasing, is_decreasing := false, false
-	is_safe := true
-	leng := len(out) - 1
-
-	is_safe = damp_check(leng, out, is_increasing, is_decreasing, is_safe)
-	if is_safe {
-		log.Println("is safe")
-		log.Println(reports)
-		log.Println(i, z)
-		log.Println("//////////////")
-		return true
+func SafeCountDampner(nested_reports [][]int) int {
+	safe_count := 0
+	for _, reports := range nested_reports {
+		if is_safe(reports) {
+			safe_count += 1
+		} else {
+			fixed := try_fix(reports)
+			if fixed {
+				safe_count++
+			}
+		}
 	}
-
-	is_increasing, is_decreasing = false, false
-	out = make([]int, len(reports))
-	copy(out, reports)
-	out = slices.Delete(out, z, z+1)
-	is_safe = true
-	is_safe = damp_check(leng, out, is_increasing, is_decreasing, is_safe)
-	log.Println(is_safe)
-	log.Println(reports)
-	log.Println(i, z)
-	log.Println("//////////////")
-	return is_safe
+	return safe_count
 }
 
-func damp_check(
-	leng int,
-	out []int,
-	is_increasing, is_decreasing, is_safe bool,
-) bool {
-	for j := range leng {
-		if j == leng {
+func try_fix(reports []int) bool {
+	out := make([]int, len(reports))
+	copy(out, reports)
+	leng := len(reports) - 1
+	for i := range leng {
+		out = slices.Delete(out, i, i+1)
+		if is_safe(out) {
+			log.Println(out)
+			return true
+		}
+		out = make([]int, len(reports))
+		copy(out, reports)
+	}
+	return false
+}
+
+func is_safe(reports []int) bool {
+	leng := len(reports) - 1
+	is_increasing, is_decreasing := false, false
+	for i := range leng {
+		if i == leng {
 			break
 		}
-		check := out[j] - out[j+1]
+		check := reports[i] - reports[i+1]
 		if check < 0 {
 			is_increasing = true
 		} else if check > 0 {
 			is_decreasing = true
 		} else {
-			is_safe = false
-			break
+			return false
 		}
 		if is_increasing && is_decreasing {
-			is_safe = false
-			break
+			return false
 		}
 		if is_increasing {
 			if check*-1 > 3 {
-				is_safe = false
-				break
+				return false
 			}
 		} else if is_decreasing {
 			if check > 3 {
-				is_safe = false
-				break
+				return false
 			}
 		}
 	}
-	return is_safe
-}
-
-func SafeCountWithDampner(reports [][]int) int {
-	safe := 0
-	for _, x := range reports {
-		is_increasing, is_decreasing := false, false
-		leng := len(x) - 1
-		for j := range leng {
-			if j == leng {
-				break
-			}
-			check := x[j] - x[j+1]
-			if check < 0 {
-				is_increasing = true
-			} else if check > 0 {
-				is_decreasing = true
-			} else {
-				is_safe := damp(x, j, j+1)
-				if is_safe {
-					break
-				}
-				safe -= 1
-				break
-			}
-			if is_increasing && is_decreasing {
-				is_safe := damp(x, j, j+1)
-				if is_safe {
-					break
-				}
-				safe -= 1
-				break
-			}
-			if is_increasing {
-				if check*-1 > 3 {
-					is_safe := damp(x, j, j+1)
-					if is_safe {
-						break
-					}
-					safe -= 1
-					break
-				}
-			} else if is_decreasing {
-				if check > 3 {
-					is_safe := damp(x, j, j+1)
-					if is_safe {
-						break
-					}
-					safe -= 1
-					break
-				}
-			}
-		}
-		safe += 1
-	}
-	return safe
+	return true
 }
 
 func SafeCount(reports [][]int) int {
