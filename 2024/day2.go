@@ -2,7 +2,6 @@ package twentyfour
 
 import (
 	"bufio"
-	"log"
 	"os"
 	"slices"
 	"strings"
@@ -26,11 +25,10 @@ func SafeCountDampner(nested_reports [][]int) int {
 func try_fix(reports []int) bool {
 	out := make([]int, len(reports))
 	copy(out, reports)
-	leng := len(reports) - 1
+	leng := len(reports)
 	for i := range leng {
 		out = slices.Delete(out, i, i+1)
 		if is_safe(out) {
-			log.Println(out)
 			return true
 		}
 		out = make([]int, len(reports))

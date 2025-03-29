@@ -20,11 +20,9 @@ func CleanCorruptedWithConditions(input string) int {
 			continue
 		}
 		if do {
-			if strings.HasPrefix(item, "mul") {
-				close := strings.IndexAny(item, ")")
-				num_str := strings.Split(item[4:close], ",")
-				sum += (to_int(num_str[0]) * to_int(num_str[1]))
-			}
+			close := strings.IndexAny(item, ")")
+			num_str := strings.Split(item[4:close], ",")
+			sum += (to_int(num_str[0]) * to_int(num_str[1]))
 		}
 	}
 	return sum
