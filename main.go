@@ -7,10 +7,7 @@ import (
 )
 
 func main() {
-	input := twentyfour.Day2Input()
-	fmt.Printf(
-		"twentyfour.SafeCountDampner(input): %v\n",
-		twentyfour.SafeCountDampner(input),
-	)
+	input := twentyfour.Day4Input()
+	fmt.Printf("twentyfour.XMASCount(input): %v\n", twentyfour.XMASCount(input))
 
 }
