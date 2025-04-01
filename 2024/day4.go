@@ -6,7 +6,32 @@ import (
 	"strings"
 )
 
-const word_size = 4
+func CrossMASCount(input [][]string) int {
+	count := 0
+	row_leng := len(input)
+	for i := 1; i < row_leng-1; i++ {
+		for j := 1; j < len(input[i])-1; j++ {
+			if input[i][j] == "A" {
+				count += count_mas(input, i, j)
+			}
+		}
+	}
+	return count
+}
+
+func count_mas(input [][]string, i, j int) int {
+	count := 0
+	points := [4][2]int{
+		{-1, -1}, {1, 1},
+		{-1, 1}, {1, -1},
+	}
+	word1 := input[i+points[0][1]][j+points[0][0]] + input[i][j] + input[i+points[1][1]][j+points[1][0]]
+	word2 := input[i+points[2][1]][j+points[2][0]] + input[i][j] + input[i+points[3][1]][j+points[3][0]]
+	if (word1 == "MAS" || word1 == "SAM") && (word2 == "MAS" || word2 == "SAM") {
+		count += 1
+	}
+	return count
+}
 
 func XMASCount(input [][]string) int {
 	count := 0
@@ -28,7 +53,6 @@ func circular_check(i, j int, input [][]string) int {
 		{1, 0}, {1, -1},
 		{0, -1}, {-1, -1},
 	}
-
 	for _, dir := range dirs {
 		word := input[i][j]
 		x := i

@@ -20,6 +20,7 @@ func main() {
 	// 	{"M", "A", "M", "M", "M", "X", "M", "M", "M", "M"},
 	// 	{"M", "X", "M", "X", "A", "X", "M", "A", "S", "X"},
 	// }
-	fmt.Printf("twentyfour.XMASCount(input): %v\n", twentyfour.XMASCount(input))
+
+	fmt.Printf("twentyfour.CrossMASCount(input): %v\n", twentyfour.CrossMASCount(input))
 
 }
